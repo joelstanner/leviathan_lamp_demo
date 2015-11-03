@@ -1,0 +1,10 @@
+---
+
+- name: Deploy worker
+  hosts: tag_Name_snapsat_worker
+  remote_user: ubuntu
+  gather_facts: yes
+
+  roles:
+    - role: snapsat_worker
+    - role: upstart_worker

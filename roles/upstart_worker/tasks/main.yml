@@ -1,0 +1,12 @@
+---
+
+- name: Get env variables
+  include_vars: secrets.yml
+
+- name: Create Worker Upstart Job
+  sudo: yes
+  template: src=snapsat.conf.j2 dest=/etc/init/snapsat.conf
+
+- name: Start Worker Upstart Job
+  sudo: yes
+  service: name=snapsat state=restarted

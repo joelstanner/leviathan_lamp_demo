@@ -1,0 +1,6 @@
+---
+
+- name: Provision landsatAWS_worker instance
+  hosts: local
+  roles:
+    - ec2_provisioning_worker
