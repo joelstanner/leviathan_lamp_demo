@@ -1,0 +1,21 @@
+---
+
+- name: Update packages
+  remote_user: ec2-user
+  sudo: yes
+  yum: name=* update_cache=yes state=latest
+
+- name: Install LAMP packages
+  remote_user: ec2-user
+  sudo: yes
+  yum: name={{ item }} state=present
+  with_items:
+    - httpd24
+    - php56
+    - mysql55-server
+    - php56-mysqlnd
+  
+- name: Start Apache web server
+  remote_user: ec2-user
+  sudo: yes
+  service: name=httpd state=restarted

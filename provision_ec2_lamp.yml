@@ -2,5 +2,15 @@
 
 - name: Provision Leviathan LAMP EC2 instance
   hosts: local
+  gather_facts: yes
+  
   roles:
     - ec2_provisioning
+    
+- name: Install packages
+  hosts: launched
+  remote_user: ec2-user
+  gather_facts: yes
+  
+  roles:  
+    - install_LAMP_packages
