@@ -14,3 +14,8 @@
   
   roles:  
     - install_LAMP_packages
+
+  handlers:
+    - name: restart apache
+      sudo: yes
+      service: name=httpd state=restarted

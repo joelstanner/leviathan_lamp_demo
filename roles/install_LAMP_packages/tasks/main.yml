@@ -14,7 +14,15 @@
     - php56
     - mysql55-server
     - php56-mysqlnd
-  
+    - gcc
+    - python-devel
+    - mysql-devel
+
+- name: Install Python packages
+  remote_user: ec2-user
+  sudo: yes
+  pip: name=MySQL-python state=present
+
 - name: Start Apache web server
   remote_user: ec2-user
   sudo: yes
@@ -24,3 +32,13 @@
   remote_user: ec2-user
   sudo: yes
   action: command /sbin/chkconfig httpd on
+
+- name: Set permission
+  remote_user: ec2-user
+  sudo: yes
+  file: path=/var/www/html owner=ec2-user group=root mode=0777 force=yes state=directory
+  notify:
+    - restart apache
+
+- name: create default MySQL db
+  mysql_db: name=leviathan_demo state=present login_user=ec2-user login_password=password
