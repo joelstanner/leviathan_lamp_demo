@@ -19,3 +19,8 @@
   remote_user: ec2-user
   sudo: yes
   service: name=httpd state=restarted
+
+- name: Apache restarts on server reboot
+  remote_user: ec2-user
+  sudo: yes
+  action: command /sbin/chkconfig httpd on
