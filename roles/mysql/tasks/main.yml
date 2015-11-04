@@ -1,0 +1,39 @@
+---
+
+- name: create mysql root pass
+  command: /usr/bin/openssl rand -hex 32
+  register: mysql_root_password
+
+#- name: copy user my.cnf file with root passwd credentials
+#  template:
+#    src: "my.cnf.j2"
+#    dest: "/root/.my.cnf"
+#    owner: "root"
+#    group: "root"
+#    mode: 0600
+
+#- name: create default MySQL db
+#  mysql_db: name=leviathan_demo state=present login_user="root"
+
+- name: update mysql user passwd
+  sudo: yes
+  mysql_user: 
+    name: leviathan_demo
+    host: "{{ item }}" 
+    password: "{{ mysql_root_password }}"
+    #login_user: root
+    #login_password: "{{ mysql_root_password }}"
+    check_implicit_admin: yes
+    priv: "*.*:ALL,GRANT"
+    state: present
+  with_items:
+    - "{{ ansible_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
+
+- name: delete anonymous mysql user
+  mysql_user: name="" state=absent
+
+- name: remove mysql test database
+  mysql_db: name=test state=absent

@@ -1,12 +1,12 @@
 ---
 
 - name: Update packages
-  remote_user: ec2-user
+  remote_user: "{{ aws_user }}"
   sudo: yes
   yum: name=* update_cache=yes state=latest
 
 - name: Install LAMP packages
-  remote_user: ec2-user
+  remote_user: "{{ aws_user }}"
   sudo: yes
   yum: name={{ item }} state=present
   with_items:
@@ -19,26 +19,31 @@
     - mysql-devel
 
 - name: Install Python packages
-  remote_user: ec2-user
+  remote_user: "{{ aws_user }}"
   sudo: yes
   pip: name=MySQL-python state=present
 
 - name: Start Apache web server
-  remote_user: ec2-user
+  remote_user: "{{ aws_user }}"
   sudo: yes
   service: name=httpd state=restarted
 
 - name: Apache restarts on server reboot
-  remote_user: ec2-user
+  remote_user: "{{ aws_user }}"
   sudo: yes
   action: command /sbin/chkconfig httpd on
 
-- name: Set permission
-  remote_user: ec2-user
+- name: Start the MySQL service
   sudo: yes
-  file: path=/var/www/html owner=ec2-user group=root mode=0777 force=yes state=directory
+  service:
+    name: mysqld
+    state: started
+    enabled: true
+
+- name: Set permission
+  remote_user: "{{ aws_user }}"
+  sudo: yes
+  file: path=/var/www/html owner="{{ aws_user }}" group=root mode=0600 force=yes state=directory
   notify:
     - restart apache
 
-- name: create default MySQL db
-  mysql_db: name=leviathan_demo state=present login_user=ec2-user login_password=password

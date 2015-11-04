@@ -14,6 +14,7 @@
   
   roles:  
     - install_LAMP_packages
+    - mysql
 
   handlers:
     - name: restart apache
