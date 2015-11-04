@@ -1,0 +1,12 @@
+keypair: leviathan2
+security_group: leviathan
+instance_type: t2.micro
+ami: ami-f0091d91
+vpc_subnet_id: subnet-a58244fc
+region: us-west-2
+instance_tags: {"Name": "leviathan-ansible-built"}
+root_ebs_size: 8
+snapshot: snap-ad8e61f8
+zone: us-west-2c
+instance_profile_name: None
+num_instances: 1

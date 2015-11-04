@@ -1,0 +1,6 @@
+---
+
+- name: Provision Leviathan LAMP EC2 instance
+  hosts: local
+  roles:
+    - ec2_provisioning
