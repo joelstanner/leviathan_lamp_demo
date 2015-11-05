@@ -33,13 +33,6 @@
   sudo: yes
   action: command /sbin/chkconfig httpd on
 
-- name: Start the MySQL service
-  sudo: yes
-  service:
-    name: mysqld
-    state: started
-    enabled: true
-
 - name: Set permission
   remote_user: "{{ aws_user }}"
   sudo: yes
