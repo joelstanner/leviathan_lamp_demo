@@ -12,5 +12,8 @@ The following environment variables must be set:
 `AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY`
 
 You must have an AWS account.
+  - Create a keypair named `leviathan2`
+  - Create a security group named `leviathan`
+  - OR UPDATE THE DEFAULTS IN roles/ec2_provisioning/defaults
 
 Install boto and ansible and aws-cli.
