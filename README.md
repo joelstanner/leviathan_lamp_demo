@@ -13,4 +13,4 @@ The following environment variables must be set:
 
 You must have an AWS account.
 
-Install boto and ansible.
+Install boto and ansible and aws-cli.
