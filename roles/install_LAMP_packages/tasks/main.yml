@@ -17,6 +17,7 @@
     - gcc
     - python-devel
     - mysql-devel
+    - stress
 
 - name: Install Python packages
   remote_user: "{{ aws_user }}"
@@ -40,3 +41,9 @@
   notify:
     - restart apache
 
+- name: Install default index.php
+  remote_user: "{{ aws_user }}"
+  sudo: yes
+  copy:
+    src: www/
+    dest: /var/www/html
