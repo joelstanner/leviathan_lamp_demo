@@ -40,12 +40,15 @@
 
 - name: Assign default user to www group
   sudo: yes
-  user: name="{{ aws_user }}" group=www
+  user:
+    name: "{{ aws_user }}"
+    groups: www
+    append: yes
 
 - name: Set permission
   remote_user: "{{ aws_user }}"
   sudo: yes
-  file: path=/var/www/html owner="{{ aws_user }}" group=www mode=0600 force=yes state=directory
+  file: path=/var/www/html owner="{{ aws_user }}" group=www mode=2775 force=yes state=directory
   notify:
     - restart apache
 

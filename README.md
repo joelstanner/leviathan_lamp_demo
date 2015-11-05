@@ -17,3 +17,5 @@ You must have an AWS account.
   - OR UPDATE THE DEFAULTS IN roles/ec2_provisioning/defaults
 
 Install boto and ansible and aws-cli.
+
+And since this is utilizing Ansible, your day will be much better if you have `cowsay` installed.
