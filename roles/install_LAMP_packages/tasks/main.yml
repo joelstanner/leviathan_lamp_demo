@@ -34,10 +34,18 @@
   sudo: yes
   action: command /sbin/chkconfig httpd on
 
+- name: Create www group
+  sudo: yes
+  group: name=www state=present
+
+- name: Assign default user to www group
+  sudo: yes
+  user: name="{{ aws_user }}" group=www
+
 - name: Set permission
   remote_user: "{{ aws_user }}"
   sudo: yes
-  file: path=/var/www/html owner="{{ aws_user }}" group=root mode=0600 force=yes state=directory
+  file: path=/var/www/html owner="{{ aws_user }}" group=www mode=0600 force=yes state=directory
   notify:
     - restart apache
 

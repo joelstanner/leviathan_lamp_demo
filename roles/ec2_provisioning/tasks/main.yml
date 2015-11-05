@@ -44,7 +44,6 @@
   with_items: ec2.instances
 
 - name: Gather All EC2 Instances
-
   local_action:
     module: ec2_lookup
     region: "{{ region }}"
@@ -58,7 +57,23 @@
     groupname: launched
   with_items: ec2_post_launch.instances
 
+- name: create alarm
+  ec2_metric_alarm:
+    state: present
+    region: "{{ region }}"
+    name: "cpu-high"
+    metric: "CPUUtilization"
+    namespace: "AWS/EC2"
+    statistic: Average
+    comparison: ">="
+    threshold: 50.0
+    period: 300
+    evaluation_periods: 1
+    unit: "Percent"
+    description: "Alarm when average CPU usage is over 50% for more than 5 minutes"
+    dimensions: {'InstanceId':'{{ item.id }}'}
+    alarm_actions: ["arn:aws:sns:us-west-2:038334053037:leviathan_demo"]
+  with_items: ec2_post_launch.instances
+
 - name: debug
   debug: var=tag_Name_leviathan-ansible-built
-
-

@@ -9,5 +9,5 @@ root_ebs_size: 8
 snapshot: snap-ad8e61f8
 zone: us-west-2c
 instance_profile_name: None
-num_instances: 1
+num_instances: 2
 aws_user: ec2-user
