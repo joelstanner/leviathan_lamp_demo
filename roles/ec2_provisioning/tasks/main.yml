@@ -61,7 +61,7 @@
   ec2_metric_alarm:
     state: present
     region: "{{ region }}"
-    name: "cpu-high"
+    name: "{{ item.id }}-cpu-high"
     metric: "CPUUtilization"
     namespace: "AWS/EC2"
     statistic: Average
